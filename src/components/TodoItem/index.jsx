@@ -2,7 +2,7 @@ import React from 'react';
 import './index.css'
 
 const TodoItem = (props) => {
-  const {data} = props
+  const {data, openCheckModal} = props
 
   return (
     <li className="todo-item">
@@ -13,7 +13,10 @@ const TodoItem = (props) => {
       </label>
       </div>
       <div className="btn-group">
-        <button className="check">check</button>
+        <button
+          className="check"
+          onClick={() => openCheckModal(data.id)}
+        >check</button>
         <button className="edit">edit</button>
         <button className="delete">delete</button>
       </div>

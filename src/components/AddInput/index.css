@@ -5,7 +5,12 @@
   width: 100%;
 }
 
-.input-container input,
+.input-container input {
+  -webkit-box-flex: 4;
+      -ms-flex: 4;
+          flex: 4;
+}
+
 .input-container button {
   -webkit-box-flex: 1;
       -ms-flex: 1;
