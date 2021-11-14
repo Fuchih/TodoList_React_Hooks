@@ -1,0 +1,15 @@
+.header {
+  display         : flex;
+  justify-content : space-around;
+  align-items     : center;
+  width           : 100%;
+  min-height      : 30px;
+  line-height     : 30px;
+  background-color: #45b7d9;
+  color           : #fff;
+
+  p {
+    font-weight: 900;
+    cursor: pointer;
+  }
+}
