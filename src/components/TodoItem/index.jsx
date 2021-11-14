@@ -8,7 +8,7 @@ const TodoItem = (props) => {
     <li className="todo-item">
       <div className="check-box">
         <input checked={data.completed} type="checkbox" name="checkbox" id="checkbox"/>
-        <label for="checkbox" className="content" style={{textDecoration: data.completed ? 'line-through' : 'none' }}>
+        <label htmlFor="checkbox" className="content" style={{textDecoration: data.completed ? 'line-through' : 'none' }}>
         {data.content}
       </label>
       </div>
