@@ -3,13 +3,15 @@ import Header from './components/Header'
 import AddInput from './components/AddInput'
 import TodoItem from './components/TodoItem'
 import CheckModal from './components/Modal/CheckModal'
-import './App.css'
+import EditModal from './components/Modal/EditModal'
+import './App.scss'
 
 export default function App() {
   const [isInputShow, setInputShow] = useState(false),
-        [isShowCheckModal, setShowCheckModal] = useState(false),
-        [todoList, setTodoList] = useState([]),
-        [currentData, setCurrentData] = useState([])
+    [isShowCheckModal, setShowCheckModal] = useState(false),
+    [isShowEditModal, setShowEditModal] = useState(false),
+    [todoList, setTodoList] = useState([]),
+    [currentData, setCurrentData] = useState([])
 
   useEffect(() => {
     const todoData = JSON.parse(localStorage.getItem('todoData'))
@@ -37,20 +39,64 @@ export default function App() {
 
   const openCheckModal = useCallback(
     (id) => {
-      setCurrentData(() => todoList.filter((item) => item.id === id)[0])
+      _setCurrentData(todoList, id)
       setShowCheckModal(true)
     },
     [todoList]
   )
 
+  const openEditModal = useCallback(
+    (id) => {
+      _setCurrentData(todoList, id)
+      setShowEditModal(true)
+    },
+    [todoList]
+  )
+
+  function _setCurrentData(todoList, id) {
+    setCurrentData(() => todoList.find((item) => item.id === id))
+  }
+
+  const submitEdit = useCallback((newData, id) => {
+    setTodoList((todoList) =>
+      todoList.map((item) => {
+        if (item.id === id) {
+          item = newData
+        }
+        return item
+      })
+    )
+    setShowEditModal(false)
+  }, [])
+
   return (
     <div className="container">
-      <CheckModal isShowCheckModal={isShowCheckModal} closeModal={() => setShowCheckModal(false)} data={currentData} />
-      <Header openInput={openInput} />
-      <AddInput isInputShow={isInputShow} addItem={addItem} />
+      <CheckModal
+        isShowCheckModal={ isShowCheckModal }
+        closeModal={() => setShowCheckModal(false)}
+        data={ currentData }
+      />
+      <EditModal
+        isShowEditModal={ isShowEditModal }
+        data={ currentData }
+        submitEdit={ submitEdit }
+      />
+      <Header
+        openInput={ openInput }
+      />
+      <AddInput
+        isInputShow={ isInputShow }
+        addItem={ addItem }
+      />
       <ul>
         {todoList.map((item) => {
-          return <TodoItem key={item.id} data={item} openCheckModal={openCheckModal} />
+          return (
+            <TodoItem
+              key={ item.id } data={ item }
+              openCheckModal={ openCheckModal }
+              openEditModal={ openEditModal }
+            />
+          )
         })}
       </ul>
     </div>

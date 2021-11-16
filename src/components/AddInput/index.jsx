@@ -1,5 +1,5 @@
 import React, { useRef } from 'react'
-import './index.css';
+import './index.scss';
 
 const AddInput = ({isInputShow, addItem }) => {
   const inputRef = useRef()

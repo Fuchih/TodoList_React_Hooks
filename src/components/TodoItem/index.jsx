@@ -1,8 +1,8 @@
 import React from 'react';
-import './index.css'
+import './index.scss'
 
 const TodoItem = (props) => {
-  const {data, openCheckModal} = props
+  const {data, openCheckModal, openEditModal} = props
 
   return (
     <li className="todo-item">
@@ -17,7 +17,10 @@ const TodoItem = (props) => {
           className="check"
           onClick={() => openCheckModal(data.id)}
         >check</button>
-        <button className="edit">edit</button>
+        <button
+          className="edit"
+          onClick={() => openEditModal(data.id)}
+        >edit</button>
         <button className="delete">delete</button>
       </div>
     </li>

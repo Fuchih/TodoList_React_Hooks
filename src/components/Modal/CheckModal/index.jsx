@@ -1,6 +1,7 @@
 import React from 'react'
-import Modal from '../';
-import './index.css'
+import Modal from '../'
+import formatDate  from '../../../libs/utils'
+import './index.scss'
 
 const CheckModal = ({isShowCheckModal, data, closeModal}) => {
   return (
@@ -8,7 +9,7 @@ const CheckModal = ({isShowCheckModal, data, closeModal}) => {
       isShowModal={isShowCheckModal}
       modalTitle="Check"
     >
-    <p>Time:{data.id}</p>
+    <p>Time:{formatDate(data.id)}</p>
     <p>Content:{data.content}</p>
     <p>Status:{data.completed ? 'done' : 'pending' }</p>
     <button className="confirm" onClick={closeModal}>Confirm</button>
