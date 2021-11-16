@@ -8,10 +8,10 @@ import './App.scss'
 
 export default function App() {
   const [isInputShow, setInputShow] = useState(false),
-    [isShowCheckModal, setShowCheckModal] = useState(false),
-    [isShowEditModal, setShowEditModal] = useState(false),
-    [todoList, setTodoList] = useState([]),
-    [currentData, setCurrentData] = useState([])
+        [isShowCheckModal, setShowCheckModal] = useState(false),
+        [isShowEditModal, setShowEditModal] = useState(false),
+        [todoList, setTodoList] = useState([]),
+        [currentData, setCurrentData] = useState([])
 
   useEffect(() => {
     const todoData = JSON.parse(localStorage.getItem('todoData'))
@@ -35,6 +35,19 @@ export default function App() {
 
     setTodoList((todoList) => [dataItem, ...todoList])
     setInputShow(false)
+  }, [])
+
+  const completedItem = useCallback((id) => {
+    setTodoList((todoList) => todoList.map((item) => {
+      if (item.id === id) {
+        item.completed = !item.completed
+      }
+      return item
+    }))
+  }, [])
+
+  const deleteItem = useCallback((id) => {
+    setTodoList((todoList) => todoList.filter(item => item.id !== id))
   }, [])
 
   const openCheckModal = useCallback(
@@ -88,17 +101,28 @@ export default function App() {
         isInputShow={ isInputShow }
         addItem={ addItem }
       />
-      <ul>
-        {todoList.map((item) => {
-          return (
-            <TodoItem
-              key={ item.id } data={ item }
-              openCheckModal={ openCheckModal }
-              openEditModal={ openEditModal }
-            />
-          )
-        })}
-      </ul>
+      {
+        !todoList || todoList.length === 0
+        ?
+        (<h3>Click + to add a task</h3>)
+        :
+        (
+          <ul>
+            {todoList.map((item) => {
+              return (
+                <TodoItem
+                  key={ item.id } data={ item }
+                  openCheckModal={ openCheckModal }
+                  openEditModal={ openEditModal }
+                  completedItem={ completedItem }
+                  deleteItem = { deleteItem }
+                />
+              )
+            })}
+          </ul>
+        )
+      }
+
     </div>
   )
 }
