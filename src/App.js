@@ -14,7 +14,7 @@ export default function App() {
         [currentData, setCurrentData] = useState([])
 
   useEffect(() => {
-    const todoData = JSON.parse(localStorage.getItem('todoData'))
+    const todoData = JSON.parse(localStorage.getItem('todoData') || '[]')
     setTodoList(todoData)
   }, [])
 
